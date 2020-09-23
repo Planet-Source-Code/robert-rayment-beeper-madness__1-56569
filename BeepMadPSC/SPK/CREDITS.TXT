@@ -1,0 +1,188 @@
+                                    CREDITS
+                                    ÄÄÄÄÄÄÄ
+
+     This diskette of music files in .SPK format  owes a lot of credit to a
+     bunch  of  dedicated  music  fans   throughout   the  world  who  have
+     laboriously written  files  (usually  BASIC  programs)  to  play these
+     songs.  The music on  this  disk  has  generally  been translated from
+     their original efforts to a format suitable for use by the DRVSPKR.SYS
+     loudspeaker device driver.
+
+     In many cases, the  original  music  program (acquired through public-
+     domain distribution channels) does  not  contain the identification of
+     the original author.  When it does,  I  am grateful to acknowledge the
+     efforts of the originator of the music program here.
+
+     This list is not complete.  Many of  the songs on the diskette contain
+     no credits of any kind.  To their  authors (as well, of course, to the
+     writers of  the  original  songs:   they  could  certainly  never have
+     imagined their work presented in  such  a  fashion!) let me express my
+     thanks.
+
+     Similarly, if you have BASIC programs  that play music which you would
+     like to contribute towards  this  collection,  please  send  it to me:
+     Gordon E.  Peterson II,  Noah  Systems,  P.O.  Box 40476, San Antonio,
+     Texas 78229-1476. If possible, I will convert it to DRVSPKR format for
+     the collection, and for  the  enjoyment of others.  Non-BASIC-programs
+     are of course welcome too!
+
+     There is also a conversion program, called PLAYCVT, which is available
+     should you wish to  convert  music  or  other  PLAY statement data for
+     yourself.  Contact me at the above address for further details.
+
+     The programs credited below to  Neil  J. Rubenking have generally been
+     produced with  his  excellent  music  recording  and  editing program,
+     PIANOMAN.  My conversion program PLAYCVMS  converts his Superkey macro
+     files into my .SPK format.
+
+     Neil J. Rubenking
+        BATTLE       The Battle Hymn of the Republic
+        CHACONNE     Chaconne from the Partita II in D Minor (J.S. Bach)
+        CMINOR       Prelude in C Minor (J.S. Bach)
+        COLT45       Nairobi Trio theme song (Ernie Kovacs)
+        DAISY        A Bicycle Built for Two
+        DONNANOB     Dona Nobis Pacem, a round
+        ENTERTAN     "The Entertainer" (Scott Joplin)
+        FEST         Ein Feste Burg Ist Unser Gott (J.S. Bach)
+        HABANERA     The Habanera from Carmen (Bizet)
+        IHOLD        "I Hold Your Hand in Mine" (Tom Lehrer)
+        INVENTN4     Two-Part Invention R#4 in D Minor (J.S. Bach)
+        MAPLLEAF     "The Maple Leaf Rag" (Scott Joplin)
+        MNTYPTHN     Liberty Bell March, Monty Python's Flying Circus
+        PAKLBEL      Canon (Pachelbel)
+        PRELUDIO     Preludio from the Partita in E Major (J.S. Bach)
+        QNAVEE       "The Ruler of the Queen's Navee", HMS Pinafore
+        RKTYTKTY     "The Irish Ballad" (Tom Lehrer)
+        SCI_AM3      3-Part Canon from Sept. 1984 Scientific American
+        SYNCLOCK     "The Syncopated Clock" (Leroy Anderson)
+        TURKISH      Turkish March (Mozart)
+        WACHTAUF     "Wachet Auf Ruft Uns die Stimme" (J.S. Bach)
+        WILLOW       "Tit-Willow", The Mikado
+        WILLTELL     William Tell Overture (Rossini)
+
+     Rich Levey
+        BELLSXMS     The Bells of Christmas
+        BETHLHEM     O Little Town of Bethlehem
+        FAITHFUL     O Come, All Ye Faithful
+        JNGLBELS     Jingle Bells
+        JOY2WRLD     Joy to the World
+        OXMASTRE     Oh, Christmas Tree
+        SILENTNT     Silent Night, Holy Night
+        TWELVDAY     The Twelve Days of Christmas
+        WE3KINGS     We Three Kings of Orient Are
+        XMASCUMG     Christmas is A-Coming
+
+      Shirley Gadich
+        DECK         Deck The Halls (traditional)
+        JINGLE       Jingle Bells
+        JOY          Joy To The World
+        MERRY        We Wish You a Merry Christmas
+        NOEL         The First Noel
+        SILENT       Silent Night, Holy Night
+        SILVER       Silver Bells
+
+     Ryan Kubly
+        CAN-CAN      Orpheus in the Underworld (Jacques Offenbach)
+        GMAJOR       Minuet in G Major (J. S. Bach)
+        GMINOR       Minuet in G Minor (J. S. Bach)
+        GRADSONG     Pomp and Circumstance (Richard Elgar)
+        MINUETC      Minuet in G Minor (J. S. Bach)
+        MINUETG      Minuet in G (Franz Haydn)
+        POLODANS     Polovetsian Dances (Borodin)
+
+     Tina Anameier
+        FUNERAL      Funeral March (Chopin)
+        PRELUDEC     Prelude in C Major (Bach)
+        ROMEOJUL     Romeo and Juliet theme (Tschaikowsky)
+        SLEEPING     Sleeping Beauty Waltz (Tschaikowsky)
+        SYMPH-40     Symphony No. 40 (Mozart)
+        SWEET        Ain't She Sweet (popular)
+
+     Char Aznabul
+        COME         Come Let Us Praise (Heinz Werner Zimmermann)
+        FOLK1        Folk Song R#1
+        GAVOTTE      Gavotte (F. J. Gossec)
+        TWINKLE      Twinkle, Twinkle, Little Star (traditional)
+
+     Nelson Ford
+        HUNGRHAP     Hungarian Rhapsody R#2 (Franz Liszt)
+        LIEBESTR     Liebestraum (Franz Liszt)
+        TRAUMERI     Traumeri (Richard Schumann)
+
+     John D. Brink
+        PRAELUD1     Preludium 1 from Well-Tempered Clavier (J.S. Bach)
+        CLAVIER      Preludium I from Well-Tempered Clavier (J.S.
+     Bach
+        PRAELUD2     Preludium 2 from Well-Tempered Clavier (J.S. Bach)
+
+     P. Fraundorf
+        DANCE        Anitra's Dance from "Peer Gynt" (Edvard Grieg)
+        ANITRA       Anitra's Dance (Edvard Grieg) (same as above?)
+
+     Michael Blum (Baum?)
+        JSB          Violin Sonata No. 6 in E Major 1st movemt (J.S. Bach)
+        VIOLIN6      Violin Sonata No. 6 (J. S. Bach) (same?)
+
+     Richard Eaton
+        SFG-BACH     Solfeggietto (C.P.E. Bach)
+
+     Tom Verkon
+        BUMBLEBE     The Flight of the Bumblebee (N. Rimsky-Korsakov)
+
+     Phil Katz
+        JESUJOY      Jesu, Joy of Man's Desiring (J. S. Bach)
+
+     Stephanie George
+        SOLFE        Solfeggietto (Carl Phillipp Emanuel Bach)
+
+     Alden B. Johnson
+        IBMSONG      "Ever Onward"
+
+     Unknown
+        ADAAMS       The Adaams Family theme
+        ANNABACH     from The Little Notebook for Anna Magdalena Bach
+
+     (J.S. Bach) (same?)
+        AXLE_F       Beverly Hills Cop theme
+        BEAVER       Leave It To Beaver theme
+        BLULLABY     Close Your Eyes Lullaby (Johannes Brahms)
+        BUCKY        Bucky
+        CABARET      Cabaret theme (John Kander)
+        DIXIE2       Dixie (traditional)
+        DOWNTOWN     Downtown (Tony Hatch)
+        FINNIGAN     Michael Finnigan (traditional)
+        FLASHDNC     Flashdance...What a Feeling (Judith Penner)
+        FLINT        Flintstones theme
+        GIPANEMA     Girl from Ipanema (Antonio Carlos Jobim)
+        GOODMORN     Good Morning to You
+        HILLBILL     Beverly Hillbillies theme
+        HORSE        Ride a Cock Horse (traditional)
+        IMPDREAM     To Dream the Impossible Dream (Mitch Leigh)
+        JBOND        James Bond theme
+        JEOPARDY     Jeopardy theme
+        JOHNNY       Johnny's Theme (The Tonight Show)
+        LEMONS       Oranges and Lemons (traditional)
+        LUDWIG1      Allegro by (Ludwig Von Beethoven)
+        MAGDELENA    from The Little Notebook for Anna Magdelena Bach
+
+     (J.S. Bach)
+        MINSTREL     The Minstrel Boy (traditional)
+        MINUET       Minuet (J.S. Bach)
+        MINUET1      Minuet in D (J. S. Bach)
+        MONSONA2     Moonlight Sonata, 2nd Movement
+        MONSONA3     Moonlight Sonata, 3rd Movement
+        MORNING      Early One Morning (traditional)
+        NIGHT        All Through the Night (old Welsh tune)
+        PARADOX      Paradox
+        PRELUDC      Prelude in C (J.S. Bach)
+        RICHMAN      If I Were A Rich Man (Jerry Brock)
+        SALLY        Sally Go Round the Sun (6/8 time) (traditional)
+        SATISFAC     I Can't Get No Satisfaction (Mick Jagger, K. Richard)
+        SERENAT      Serenat
+        SSILENCE     The Sounds of Silence (Paul Simon)
+        STARWARS     Star Wars theme (John Williams)
+        SUNRISET     Sunrise, Sunset (Jerry Bock)
+        TAKE5        Take Five (Paul Desmond)
+        TREKSONG     Star Trek theme (Alexander Courage)
+        WMTELL       William Tell Overture (Rossini)
+        WRECK        Ramblin' Wreck from Georgia Tech

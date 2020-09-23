@@ -1,0 +1,1580 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                SPEAKER DEVICE DRIVER
+
+
+
+
+
+
+
+
+
+
+                                     DRVSPKR.SYS
+
+
+
+
+                                    User's Guide
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            Version of November 13, 1986
+
+
+
+
+
+
+
+
+
+                                       Preface
+
+
+
+                    The loudspeaker provided on an IBM PC, XT and AT
+               computer is capable of a variety of audible outputs in
+               addition to the normal "beep".  However, there is
+               little or no supporting software provided in MS/DOS to
+               allow a program to make use of this capability.
+
+                    In addition, the normal "beep" is a completely
+               processor-intensive operation, resulting in very er-
+               ratic operation of programs which occasionally have to
+               do a beep.  An example is DBASE III, which beeps at the
+               end of an input field.  Normally, such a beep ties up
+               the processor, such that it can do nothing else during
+               that time.  If several beeps have been queued, the wait
+               for all of these to finish can be quite an annoyance.
+
+                    This document describes the Speaker Device Driver,
+               which provides a solution to these problems.
+
+
+
+
+
+
+                             Table of Contents
+
+
+            1.  INTRODUCTION...................................1
+             1.1  The ShareWare Concept........................1
+              1.1.1  What You Can Do...........................1
+              1.1.2  What You Cannot Do........................2
+              1.1.3  What You Should Do........................2
+
+            2.  INSTALLING THE SPEAKER DEVICE DRIVER...........4
+             2.1  Installing the Driver File...................4
+             2.2  Modifying Your CONFIG.SYS File...............4
+
+            3.  FACILITIES OF THE SPEAKER DEVICE DRIVER........6
+             3.1  Checking Out Your Beep.......................6
+             3.2  Interrupt-Driven Operation...................7
+             3.3  Multiple Beep Suppression....................7
+             3.4  Non-Processor-Speed Dependent................8
+             3.5  Making A Beep................................8
+             3.6  Changing the Sound of Your Beep..............9
+             3.7  Producing a Sequence of Tones................9
+             3.8  Buffered Tone Generation....................10
+             3.9  A New Device................................10
+
+            4.  SPEAKER DEVICE DRIVER COMMANDS................11
+             4.1  The Basics..................................11
+             4.2  Commands Available..........................12
+              4.2.1  F - Frequency............................12
+              4.2.2  G - Gap..................................12
+              4.2.3  D - Duration of Each Tone................13
+              4.2.4  T - Tempo................................13
+              4.2.5  P - Pause................................14
+              4.2.6  R - Resume...............................14
+              4.2.7  B - Begin Recording......................15
+              4.2.8  E - End Recording........................15
+              4.2.9  Unrecognized Commands....................15
+              4.2.10  Controlling the Volume..................15
+              4.2.11  Chords..................................16
+
+            5.  HOW TO CONFIGURE YOUR BEEP....................17
+             5.1  Several More Example Beeps..................17
+
+            6.  SENDING COMMANDS TO THE DRIVER................19
+             6.1  From A Program..............................19
+             6.2  From the Console Keyboard...................19
+             6.3  From a File.................................20
+              6.3.1  Sending Other Sequences..................21
+             6.4  Testing Your Beep...........................21
+
+            7.  ABOUT THE AUTHOR..............................23
+
+
+
+                                                                          i
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+
+          1.  INTRODUCTION
+
+
+               The loudspeaker provided on an IBM  PC,  XT  and  AT
+          computer  is  capable  of a variety of audible outputs in
+          addition to the normal "beep".  However,  there is little
+          or  no  supporting software provided in MS/DOS to allow a
+          program to make use of this capability.
+
+               In addition,  the  normal  "beep"  is  a  completely
+          processor-intensive operation,  resulting in very erratic
+          operation of programs which occasionally  have  to  do  a
+          beep.  An example is DBASE III, which beeps at the end of
+          an  input  field.    Normally,  such  a  beep ties up the
+          processor,  such that it can do nothing else during  that
+          time.    If several beeps have been queued,  the wait for
+          all of these to finish can be quite an annoyance.    This
+          is  even  more  of  a problem when you are are on-line to
+          some other computer.  The beeps that you receive normally
+          tie up your communications software,  slowing  down  your
+          communications and in extreme cases causing data loss due
+          to buffer overrun.
+
+               This  document  describes the Speaker Device Driver,
+          which provides a solution to these problems.
+
+
+          1.1  The ShareWare Concept
+
+
+               The "ShareWare" concept is basically  an  experiment
+          in  the  marketing and distribution of software.   It at-
+          tempts to cut down on distribution and marketing expenses
+          so that quality software can be made widely available  at
+          the  lowest  possible price.   This concept also makes it
+          possible for users to try the software before they decide
+          to keep (and, hopefully, pay) for it.  This is very handy
+          in a world full of competing packages!
+
+
+          1.1.1  What You Can Do
+
+
+
+
+          Rev. November 13, 1986 23:38:47                               -1-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+               This software is being placed into the public domain
+          as "ShareWare".   This means that you are  encouraged  to
+          copy  this  software  and  give it to your friends and/or
+          business associates.  You may also use it in a commercial
+          environment.  However,  you may not sell the software for
+          more  than  the cost of the diskette and a small handling
+          charge.   If you paid more than five or ten  dollars  for
+          the  diskette  with  this  software on it,  you have been
+          cheated!   Please advise the program's author (my address
+          appears  at  the  end  of this document) of the price you
+          paid, when, and from whom you purchased it.
+
+               If you distribute a copy of this software to  anyone
+          else, you must distribute it complete and unchanged.  You
+          must not change the program,  the user's guide, or any of
+          the other files on the diskette.   (You are permitted  to
+          add additional files on the diskette if you like, as long
+          as  you  clearly  identify yourself in the files you add,
+          along with the date you add those files to the diskette).
+
+               You will find,  especially if you have a hard  disk,
+          that this is a product you will use literally every day.
+
+
+          1.1.2  What You Cannot Do
+
+
+               As  just mentioned,  you cannot modify or delete any
+          of the files you find on the diskette  when  you  give  a
+          copy of it to anyone else.  If you base a product on this
+          one,  which you intend to sell for profit,  you must make
+          arrangements for such  use  with  me  first.    Extremely
+          reasonable licensing terms for such use are available.
+
+
+          1.1.3  What You Should Do
+
+
+               If you end up liking and using this product (and you
+          will),  you  should  make a contribution to the program's
+          author at the address found later on  in  this  document.
+          By  doing so,  I can keep you posted on revisions and im-
+          provements to this Speaker Device Driver as  they  become
+          available.    I  can also let you know about other useful
+
+
+
+          Rev. November 13, 1986 23:38:54                               -2-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          software products as they become available from  time  to
+          time.    A contribution of ten dollars is suggested,  but
+          you may want to make it fifteen or twenty if you  end  up
+          using the product a lot.   Use your discretion based upon
+          what the product turns out to be worth to  you,  just  as
+          you would if you were leaving a tip in a nice restaurant.
+
+               It  is  these  contributions which will make it pos-
+          sible to continue to develop this and  other  interesting
+          software products for you to use in the future.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:39:02                               -3-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          2.  INSTALLING THE SPEAKER DEVICE DRIVER
+
+
+               The  speaker  device  driver is provided as a single
+          file named "DRVSPKR.SYS".
+
+
+          2.1  Installing the Driver File
+
+
+               The file "DRVSPKR.SYS" should be placed in the  root
+          directory  of  the  drive from which MS/DOS will boot up.
+          For instance,  if you have received the speaker driver on
+          a  diskette,  and  that diskette is in your "a:" diskette
+          drive, execute the command:
+
+               COPY A:DRVSPKR.SYS C:\DRVSPKR.SYS
+
+               If your hard drive is something other than drive  C,
+          then  of  course  you would replace the C: above with the
+          drive letter corresponding to your hard drive.
+
+
+          2.2  Modifying Your CONFIG.SYS File
+
+
+               Once the device driver is  installed  on  your  hard
+          disk,  the  next step is to tell MS/DOS that you want the
+          system to install the driver each time it comes up.    To
+          do  this,  you  must edit the file in your root directory
+          called "CONFIG.SYS".   Specific  instructions  for  doing
+          this will,  of course, depend upon what editor you prefer
+          to use.   However,  you will want to add a line  to  your
+          "CONFIG.SYS" file which says:
+
+               DEVICE=DRVSPKR.SYS
+
+               Once  you  have  done  this,  and rewritten the CON-
+          FIG.SYS  file  to  your  disk,  you  should  reboot  your
+          machine.   From this point on, every time you reboot, the
+          Speaker Device Driver will automatically be available for
+          your use.
+
+
+
+
+          Rev. November 13, 1986 23:39:05                               -4-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+               Perhaps the simplest way to add this  line  to  your
+          CONFIG.SYS file is to enter the command line:
+
+               ECHO DEVICE=DRVSPKR.SYS >>\CONFIG.SYS
+
+               If you use the command line just above, be sure that
+          you  use  two of the right-pointy-brackets.   This causes
+          the new line to be added at the end of your existing CON-
+          FIG.SYS file.   If you use only one,  you will completely
+          overwrite any existing CONFIG.SYS file that you might al-
+          ready have.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:39:11                               -5-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          3.  FACILITIES PROVIDED BY THE SPEAKER DEVICE DRIVER
+
+
+               Once you have installed the Speaker Device Driver as
+          described  in the previous chapter,  you have several new
+          things that you may notice.
+
+
+          3.1  Checking Out Your Beep
+
+
+               The first thing that you might notice  is  that  the
+          way  your  machine sounds when it makes a "beep" is prob-
+          ably different.   You can check this by entering the com-
+          mand line:
+
+               ECHO ^G
+
+               This  will  tell your machine to make a single beep.
+          It is even a better demonstration if you tell it to  make
+          several beeps:
+
+               ECHO ^G^G^G^G^G^G^G^G^G^G
+
+               The terminology in the lines above,  "^G",  does not
+          indicate that you should type the two characters "^"  and
+          "G",  (although  it will echo to your display the same as
+          if you did!).   Instead,  what this means is to press and
+          hold down the Control key (probably labelled "Ctrl"), and
+          while  it  is held down,  then also pressing the "G" key.
+          You will observe that the result will display as "^G"  as
+          shown on the above command line.
+
+               When  you  then  press  the ENTER key,  your machine
+          should beep.   If you try this  before  you  install  the
+          speaker  device  driver,  you will notice that there is a
+          distinct pause before the regular MS/DOS prompt  returns.
+          In  the longer example where you type a bunch of Control-
+          G's,  the pause will be quite long!   However,  once  the
+          speaker  device  driver  is installed,  that pause should
+          disappear.
+
+               This  is  because  the  Speaker  Device  Driver   is
+
+
+
+          Rev. November 13, 1986 23:39:14                               -6-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          "interrupt-driven".
+
+
+          3.2  Interrupt-Driven Operation
+
+
+               Normally,  when the PC (or XT or AT) makes a beep or
+          other sound, it is sitting in a tight program loop,  com-
+          pletely  busy,  moving the speaker cone back and forth to
+          produce the sound that you hear.  However,  the designers
+          of the PC made it possible to tell the machine's hardware
+          to  produce the sound by itself,  allowing the program to
+          go on ahead doing more useful work.
+
+               The speaker device driver hooks into MS/DOS's  timer
+          interrupt.   This interrupt,  which occurs about eighteen
+          times per second, allows the speaker device driver to get
+          control every once in a while.   (Don't worry about  just
+          how  this  happens,  it is quite automatic and invisible!
+          And,  the speaker device driver uses an  extremely  small
+          amount of processor time,  so that it will not affect the
+          execution time of your other programs).
+
+               The speaker device  driver,  when  it  gets  control
+          about  eighteen  times  per  second,  can do one of three
+          things.  It can do nothing (the usual case),  or turn the
+          speaker "on" (to make it start producing a tone), or turn
+          the speaker "off",  stopping the tone it had been produc-
+          ing.
+
+               During the rest of the time,  the speaker is  either
+          turned off or producing a tone,  while your programs con-
+          tinue to run normally.    With  the  speaker  driver  in-
+          stalled,  they  no longer have to pause when they have to
+          make a beep.
+
+
+          3.3  Multiple Beep Suppression
+
+
+               You  have  probably  experienced  cases  where   the
+          program  you  were  running  decided  to  produce several
+          beeps.  (This can happen, for example,  if you have keyed
+          ahead  several characters,  which turn out to be invalid,
+          and your program beeps once for each invalid character it
+
+
+
+          Rev. November 13, 1986 23:39:20                               -7-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          receives).  Sometimes, you have to wait quite a long time
+          until all the beeps for  the  queued-up  characters  have
+          been sounded, before you can continue.
+
+               This can be especially frustrating if you are online
+          to  some service such as CompuServe,  and somebody on the
+          CB channel broadcasts a message containing a while  bunch
+          of "beep" commands in a row!
+
+               The  speaker  device  driver,  besides allowing your
+          program to continue while  the  beeps  take  place,  also
+          automatically  suppresses  multiple  "beep" commands that
+          are received in  rapid  succession.    (In  other  words,
+          "beep" commands are not queued).
+
+
+          3.4  Non-Processor-Speed Dependent
+
+
+               The  fact  that  the speaker device driver is driven
+          from the timer interrupt,  which occurs at a fixed  rate,
+          also  means  that the way its beep sounds does not change
+          if the speed of your processor changes.    You  may  have
+          noticed   that  some  programs'  beeps  change  frequency
+          depending on whether they are running on a PC XT,  or  an
+          AT,  which is faster.  Likewise, some programs which make
+          sounds will sound different if you  have  an  accelerator
+          (or "turbo") board,  or the like.  These changes will not
+          affect the speaker device driver.   It should sound  just
+          the same, regardless of how fast (or slow) your processor
+          runs.
+
+
+          3.5  Making A Beep
+
+
+               Nearly  every  program which runs under MS/DOS makes
+          its beeps by calling a routine in the ROM  BIOS  provided
+          as  part  of the basic programming of every PC-compatible
+          machine.   Programs make such a beep by displaying an AS-
+          CII  "BELL"  character (so called because it used to ring
+          an actual,  mechanical bell on the old-fashioned mechani-
+          cal terminals).  This character is a binary 7, which also
+          happens to be a "Control-G".
+
+
+
+
+          Rev. November 13, 1986 23:39:28                               -8-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+               The  speaker  device  driver intercepts calls to the
+          ROM BIOS that tell it to make a beep (by sending a binary
+          7,  or ASCII "BELL" character) and performs those itself,
+          instead.    All  characters  other  than the ASCII "BELL"
+          character are passed along to the ROM BIOS, as normal.
+
+
+          3.6  Changing the Sound of Your Beep
+
+
+               Besides making your machine's beeps take  less  time
+          away from your program,  the speaker device driver allows
+          you to redefine the way your machine's beep sounds.   You
+          can make it longer,  shorter,  higher, or lower.  You can
+          make the beeps happen quite  close  together,  such  that
+          they  are  almost  one continuous tone,  or you can space
+          them apart, so they have a silent gap in between.
+
+               You can also change the beep such that  it  is  com-
+          posed of more than one frequency.  This can be useful if,
+          for  example,  you  do  not hear certain frequencies very
+          well.   You can make a beep which is composed of  several
+          frequencies, perhaps rising, perhaps lowering, perhaps in
+          an  alternating  sequence  or  even as sort of a warbling
+          sound.
+
+               Personalizing your beep also allows you to tell,  if
+          you  have several processors in the same room,  which one
+          it was that made a beep.
+
+               Some programs make their own beeps,  usually in  the
+          same  slow  way  that the ROM BIOS normally does.   Since
+          such programs do not use the ROM BIOS, these beeps cannot
+          be intercepted by the speaker device  driver.    However,
+          their  unchanged  tone  will  tell  you immediately which
+          programs these are!
+
+               How to configure your beep to suit your  preferences
+          will be described in a later chapter.
+
+
+          3.7  Producing a Sequence of Tones
+
+
+               In  fact,  the  speaker  device driver is capable of
+
+
+
+          Rev. November 13, 1986 23:39:35                               -9-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          producing nearly any sequence of  tones  you  like,  much
+          more than just a "beep".   You could actually program the
+          speaker device driver to play music,  if you  wanted  to.
+          And,  while  it  is doing that,  you can continue to edit
+          files, compile programs, and whatever,  just as you would
+          use your machine normally.
+
+
+          3.8  Buffered Tone Generation
+
+
+               The  reason  you  can  play music while your machine
+          runs other programs is because the speaker device  driver
+          contains  a  relatively  large  buffer which allows it to
+          "queue" long sequences of commands.  This permits several
+          tone generation commands to be sent to the speaker device
+          driver,  even if it has not finished the commands it  has
+          already received, without forcing the program sending the
+          commands to wait.
+
+
+          3.9  A New Device
+
+
+               You  can  use  the speaker device driver from nearly
+          any language or  program  you  like,  since  the  speaker
+          device  driver  adds  a  new device name to your computer
+          system.   Just as you can tell  most  programs  to  write
+          their  output  to CON: to send it to the console display,
+          or to LPT1: or PRN: to send it to your printer,  you  now
+          have  another  device  called  SPKR:  which allows you to
+          write commands to the speaker device driver.
+
+               Supporting the  loudspeaker  with  a  device  driver
+          means  that  you can open the loudspeaker like a file and
+          write commands to it from nearly any language or  program
+          you like.
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:39:43                              -10-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          4.  SPEAKER DEVICE DRIVER COMMANDS
+
+
+               You  do not have to understand the command sequences
+          described in this  chapter  to  use  the  speaker  device
+          driver.   You can just install it and use it to eliminate
+          those frustrating delays while  your  programs  "get  the
+          beeps out of their system"!
+
+               However, by understanding how to control the speaker
+          device  driver,  you can make it do a lot of other useful
+          things, too.  Besides, it's a lot of fun!
+
+
+          4.1  The Basics
+
+
+               Basically,  most speaker device driver commands con-
+          sist  of  ASCII  alphabetic  characters  (letters  of the
+          alphabet).   Sometimes,  these are preceded  by  numbers,
+          which  can  be  one  or  more  digits long,  based on the
+          specific command.   All numbers sent to  the  driver  are
+          converted to a maximum sixteen-bit (unsigned) binary num-
+          ber,  allowing  values of theoretically as high as 65535,
+          although most commands do not use values that big.    Any
+          non-printing  characters  (such as carriage return,  line
+          feed,  or form feed) that somehow get sent to the speaker
+          device driver are simply discarded.
+
+               The actual alphabetic command characters can be sent
+          in either upper or lower case letters, the speaker device
+          driver does not care either way.
+
+               Since  each  alphabetic  character terminates a com-
+          mand,  there is no  need  for  blanks,  commas  or  other
+          characters to separate commands.   You can just send them
+          adjacent to each other.   Or,  you might want to  include
+          spaces  between individual components of a command string
+          to improve the readability.
+
+               Some commands  take  effect  as  soon  as  they  are
+          received,  but  other  commands just get "remembered" and
+          are used to control the way  that  subsequently  produced
+
+
+
+          Rev. November 13, 1986 23:39:49                              -11-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          tones sound.
+
+
+          4.2  Commands Available
+
+
+               The  following sections describe the individual com-
+          mands.   All commands are buffered and take effect  "when
+          it is their turn", unless otherwise noted in the descrip-
+          tion of that command.
+
+
+          4.2.1  F - Frequency
+
+
+               This  command letter causes a tone to be produced at
+          the "current frequency".  The initial "current frequency"
+          when the speaker device driver gets loaded,  during  your
+          DOS bootstrap,  is 1000Hz.   (This is a typical frequency
+          for a "beep").   Note,  however,  that since the  speaker
+          device  driver  does  not get re-initialized just because
+          you change programs,  your program should not assume that
+          the "current frequency" is still set to 1000Hz,  since it
+          could have been changed by a previous program.
+
+               To change the "current  frequency"  to  a  different
+          value,  put  the  frequency  desired,  as  a number,  im-
+          mediately preceding the "F" or "f" character.    For  ex-
+          ample, to produce a tone of 1500Hz, you would write
+
+               1500F
+
+               to  the  speaker device driver.   The "F" command by
+          itself will produce another tone of the same frequency as
+          was produced by the last "F" command.
+
+
+          4.2.2  G - Gap
+
+
+               This command letter sets the number of  timer  ticks
+          (there are approximately eighteen timer ticks per second)
+          of  silent time between individual tones.   The number of
+          timer ticks between tones is specified as  a  number  im-
+          mediately  preceding  the "G" or "g" character.   Typical
+
+
+
+          Rev. November 13, 1986 23:39:56                              -12-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          values range from 0, the initial default value, to twenty
+          or so, although larger values can be specified.   For ex-
+          ample,  if  you want your beeps separated by a short gap,
+          you could send the command:
+
+               2g
+
+               to the speaker device driver.   Note that  you  only
+          need  to  send  this  command once,  whenever you want to
+          change the gap's duration.  The gap will then be inserted
+          by the speaker device driver at the end of each  tone  it
+          generates, until you change the gap again.
+
+
+          4.2.3  D - Duration of Each Tone
+
+
+               This  command letter tells the speaker device driver
+          how many timer ticks long each tone should be.   Like the
+          Gap  command,  this command produces no tones of its own.
+          It merely is used to set the value which  will  determine
+          the  length  of  tones produced by the following "F" com-
+          mands.  For example, to make each tone last about a third
+          of a second, you would send the command:
+
+               6d
+
+               to the speaker device driver.  The default duration,
+          when the driver is loaded, is five timer ticks.
+
+
+          4.2.4  T - Tempo
+
+
+               The value for tempo is used to scale the duration of
+          each tone.   This allows you  to  "globally"  change  the
+          duration  of a series of tones,  without having to change
+          each of the individual duration commands  that  might  be
+          contained in the sequence.
+
+               A  tempo  value  of  256 indicates a "normal" tempo,
+          where "256t5d600f" would produce a 600Hz tone for a dura-
+          tion of five timer ticks.  To change the tempo to make it
+          faster,  the command "128t5d600f" would produce  a  600Hz
+          tone  for  a  duration of two or three timer ticks.   In-
+
+
+
+          Rev. November 13, 1986 23:40:03                              -13-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          creasing the value in a command like  "512t5d600f"  would
+          produce  a  600Hz tone for a duration of ten timer ticks,
+          and so forth.
+
+               Again,  the tempo value affects all following tones.
+          Larger  "tempo"  values  make  the  durations longer than
+          their normal times,  smaller "tempo" values make the tone
+          durations  shorter  than  their normal times.   Since the
+          duration of gaps is  usally  quite  short,  changing  the
+          tempo value does not affect the duration of gaps.  If you
+          do  change  the  "tempo"  value from its default value of
+          256,  it is only polite to remember to restore it to  its
+          previous value before your program returns to DOS!
+
+
+          4.2.5  P - Pause
+
+
+               This  is  a  strange command because it takes effect
+          immediately, and is not buffered.  When it is received by
+          the driver,  it causes it to not fetch any  new  commands
+          from its buffer for up to about five seconds (or until it
+          receives a "Resume" command,  see below),  whichever hap-
+          pens first.   This command is not usually  necessary,  so
+          don't worry if you don't understand it.
+
+
+          4.2.6  R - Resume
+
+
+               This strange command, like Pause, is not stored into
+          the  internal  buffer  used by the speaker device driver,
+          but takes effect immediately.   It causes the fetching of
+          commands  from  the device driver's buffer to be resumed,
+          allowing it to resume generating tones.  Note that, if no
+          resume command follows a pause command,  the  pause  will
+          time out anyway after about five seconds.
+
+               The pause and resume commands allow you to make sure
+          that  several  commands are loaded into the buffer before
+          the first one of them  begins  executing,  in  case  your
+          program  generates  the  commands  rather  slowly  to the
+          driver,  but you want the commands to execute faster than
+          you can send them.
+
+
+
+
+          Rev. November 13, 1986 23:40:09                              -14-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+          4.2.7  B - Begin Recording
+
+
+               This  command  tells  the speaker device driver that
+          the following commands are not to be acted  on  at  once,
+          but  rather  that  they  are to be recorded in its memory
+          area for later use.    The commands that are recorded  in
+          this fashion are "played back" whenever a program wants a
+          "beep".
+
+               The memory area set aside for the recording is about
+          128 bytes long.   If you try to record a sequence of com-
+          mands longer than this,  the driver will reset  the  beep
+          back  to  the default (which is a single "f" command) and
+          stop the recording.
+
+
+          4.2.8  E - End Recording
+
+
+               This command is used  to  tell  the  speaker  device
+          driver  that the commands preceding comprise the complete
+          sequence to be used when it is asked to produce a "beep".
+          For example, if you want to reconfigure your beep to be a
+          1000Hz tone that is four timer ticks long, with two timer
+          ticks worth of gap between each beep,  you would send the
+          command string:
+
+               b2g4d1000fe
+
+               The  possibilities  are  nearly  endless.   However,
+          several more examples of beeps you can configure will  be
+          described in the next chapter.
+
+
+          4.2.9  Unrecognized Commands
+
+
+               Any   commands  which  are  unrecognized  cause  the
+          speaker device driver to produce a clicking sound.
+
+
+          4.2.10  Controlling the Volume
+
+
+
+
+          Rev. November 13, 1986 23:40:17                              -15-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+               Unfortunately,  the PC has no mechanism to allow for
+          the control of the volume level from its speaker.
+
+
+          4.2.11  Chords
+
+
+               The  PC's  sound  generator  normally  produces  one
+          frequency at a time,  as what is called a "square  wave".
+          Any   attempt   to   produce   different   "simultaneous"
+          frequencies (chords),  or other more sophisticated tones,
+          would  require  constant  (and continuous) attention from
+          the processor,  which is just the kind of delays that the
+          speaker device driver was written to eliminate.  Sorry.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:40:23                              -16-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          5.  HOW TO CONFIGURE YOUR BEEP
+
+
+               In the previous chapter,  how to configure your beep
+          to be a fairly normal one was described.   In this  chap-
+          ter,  several  other  possible  beeps  will be described,
+          along with examples of the command strings that configure
+          them.
+
+
+          5.1  Several More Example Beeps
+
+
+               If you wanted  your  beep  to  be  two  short  beeps
+          separated by a longer gap, you could send the command:
+
+               b2g2d1000f5dfe
+
+               If  you  wanted  a beep which alternated between two
+          tones, you could send the command:
+
+               b0g3d400f1400f400f3g1400fe
+
+               Notice in the above command string that we have told
+          it there should not be  a  gap  between  the  four  tones
+          produced  (there  are four tones because the command con-
+          tains four "f"  commands,  each  of  which  produces  one
+          tone).   The second Gap command,  "3g" must appear BEFORE
+          the final "f" command,  if the three timer tick gap indi-
+          cated  is  to  take effect following the last of the four
+          tones.   Remember that each "f" command causes a tone  of
+          the current frequency, for the current duration (possibly
+          modified  by the current tempo),  followed by the current
+          gap.
+
+               Since you are allowed  approximately  128  bytes  to
+          store  the definition of your personal beep,  you can see
+          that you can make your own beep quite elaborate if you so
+          desire.
+
+               As one final example, if you wanted a beep which was
+          composed of three  different  frequencies,  separated  by
+          different lengths of gaps, you could specify a command:
+
+
+
+          Rev. November 13, 1986 23:40:26                              -17-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+               b1g2d800f2g1200f6g2400fe
+
+               By now you should be getting the idea.  The best way
+          to  get  a  feel  for  how  it works is to play with it a
+          while,  and it's fun to do that,  anyway.    Next,  we'll
+          describe one way to do just that.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:40:33                              -18-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          6.  SENDING COMMANDS TO THE DRIVER
+
+
+               This section will describe several ways you can send
+          commands to the speaker device driver.
+
+
+          6.1  From A Program
+
+
+               You can,  as previously mentioned,  send commands to
+          the speaker device driver from  any  program  you  write,
+          written in nearly any imaginable language.  Normally, the
+          way  to  do  this is to open a file with the name "SPKR:"
+          (some languages prefer it without the ":" at the end) and
+          write the command to it.
+
+               NOTE:  With some languages,  you may have  to  close
+          the file to force the data to be written to the driver if
+          you  want  the command to take effect immediately,  since
+          some languages don't write their output until their  file
+          buffer  fills  up,  or  until they close their files just
+          before returning to the operating system upon completion.
+
+
+          6.2  From the Console Keyboard
+
+
+               If all you want to do  is  to  experiment  with  the
+          driver, you don't have to write a special program just to
+          do that.  Here's one way (there are many other ways which
+          would work as well).
+
+               To send a command to the driver,  at the DOS prompt,
+          enter:
+
+               COPY CON: SPKR:
+               <put your command you want to try here>
+               ^Z
+
+               Note that, like before, the final line "^Z" means to
+          hold down the "Ctrl" key while you  press  the  "Z"  key.
+          When you press this "Control-Z",  the command on the pre-
+
+
+
+          Rev. November 13, 1986 23:40:35                              -19-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          vious line will be sent to the  driver,  and  you  should
+          hear whatever the result will be.
+
+               For  example,  you can configure your beep from your
+          keyboard by entering the commands at the DOS prompt:
+
+               COPY CON: SPKR:
+               b3g5d660fe
+               ^Z
+
+               Note that the above command does not  let  you  hear
+          the  new beep you have configured,  it just records it so
+          it can be played back later.   If you just wanted to  try
+          possible  command  strings,  you  could  test  the  above
+          sequence to see if  it  is  the  way  you  wanted  it  by
+          entering:
+
+               COPY CON: SPKR:
+               3g5d660f
+               ^Z
+
+               If  you  wanted  to  hear  it  the  way  it would be
+          repeated, with the gaps between several beeps,  you could
+          enter:
+
+               COPY CON: SPKR:
+               3g5d660ffff
+               ^Z
+
+
+          6.3  From a File
+
+
+               Once  you  have found a beep that is uniquely "you",
+          you will probably want to have it be set up automatically
+          every time your machine reboots.  To do this,  just write
+          the  beep command string you like to a file.   You can do
+          this with any editor of your choice,  or again you  could
+          just use copy:
+
+               COPY CON: MYBEEP.TXT
+               b<your favorite beep sequence>e
+               ^Z
+
+               You can confirm that it has been stored correctly on
+
+
+
+          Rev. November 13, 1986 23:40:41                              -20-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+          disk by keying the command:
+
+               TYPE MYBEEP.TXT
+
+               and  the  result  should be the beep command you en-
+          tered.  Then, edit your \AUTOEXEC.BAT file and put in the
+          command:
+
+               COPY MYBEEP.TXT SPKR:
+
+               After doing  this,  each  time  your  computer  gets
+          rebooted,  it  will  automatically configure your beep to
+          sound just the way you want it to.
+
+
+          6.3.1  Sending Other Sequences
+
+
+               You can, of course,  send sequences other than those
+          which configure your beep from a disk file to the speaker
+          device driver.   In fact, you could write an entire musi-
+          cal selection as a series of device driver  commands  and
+          store them into a file.   Copying this file to the device
+          SPKR: as in the way just described will start the musical
+          selection playing,  and you can go ahead to  do  whatever
+          you want with your computer while the selection plays.
+
+               Although  the buffer in the speaker device driver is
+          quite large,  it is not infinite.   If you send extremely
+          long  command sequences to the speaker device driver,  it
+          is possible that you  will  fill  the  buffer  completely
+          full.    In this case,  the program sending to the buffer
+          will automatically wait until there is room enough in the
+          buffer for it to finish sending everything.
+
+               Sending  other  command  sequences  to  the  speaker
+          device  driver  does not interfere with the beep you have
+          configured.  You could play the entire William Tell Over-
+          ture, and then tell your machine to "beep",  and you will
+          still  get  the  "beep"  the  way  it was previously con-
+          figured.
+
+
+          6.4  Testing Your Beep
+
+
+
+
+          Rev. November 13, 1986 23:40:47                              -21-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+               As mentioned before,  you can easily test your  beep
+          any time you want to.  Just enter, at the DOS prompt, the
+          command:
+
+               ECHO ^G
+
+               and  your  beep will play back,  just the way you've
+          configured it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Rev. November 13, 1986 23:40:53                              -22-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+
+
+          7.  ABOUT THE AUTHOR
+
+
+               I think it is important for those of us in the  com-
+          puting  profession  to  get to know each other.   Just as
+          "ShareWare" software can help to extend the reach of  the
+          programs  we  write,  hopefully this concept will help to
+          extend our interpersonal network of contacts as well.  It
+          is not necessary that software authors be condemned to  a
+          life  of  anonymity!     I  encourage  other  authors  of
+          "ShareWare" products to further this personal and profes-
+          sional networking by telling us about themselves as well.
+
+               The Speaker Device Driver was  written  in  1986  by
+          Gordon E. Peterson II.  I have been writing computer sys-
+          tem  software  in  assembly  language  for  about sixteen
+          years,  starting as  a  Computer  Science  major  at  the
+          University of Illinois in Champaign-Urbana.   This was my
+          first exposure to IBM equipment, learning on their 360/75
+          system (a BIG computer at the time,  with a million bytes
+          of  main memory and two megabytes more of slow Ampex bulk
+          core memory.   It is astonishing to realize that  I  have
+          nearly  that  much  memory,  and much faster too,  on the
+          machine on the table in front of me).
+
+               During a little over nine  years  after  getting  my
+          degree,  I  worked  in  Advanced  Product  Development at
+          Datapoint Corporation.
+
+               On the off chance that you might  be  familiar  with
+          Datapoint,  I  was the developer of the "Dot-Series" disk
+          operating systems there,  being  responsible  for  DOS.A,
+          DOS.B,  DOS.C,  DOS.D,  and  DOS.E.   I was the author of
+          their high-speed  disk  BACKUP  and  COPY  programs,  the
+          REFORMAT utility,  and their DUMP utility,  among others.
+          I wrote their Multi-Partition Virtual  Machine  facility,
+          called  PS  (for  Partition Supervisor),  and their high-
+          performance print unspooler (called UNSPOOL).    My  most
+          notable  software product I created there was the DOS ARC
+          System, which was the world's first commercially success-
+          ful local area network.   This  product  eventually  sold
+          over a billion dollars' worth of hardware for Datapoint.
+
+
+
+
+          Rev. November 13, 1986 23:40:55                              -23-
+
+
+
+
+
+
+
+          Speaker Device Driver User's Guide
+
+
+
+               At various other stages of my career,  I have worked
+          with quite a variety of machines and  equipment,  ranging
+          from   several   different   kinds   of   mainframes   to
+          microprocessor control software for a very  sophisticated
+          discotheque lighting control system;   an advanced credit
+          card telephone;  a museum exhibit controller running four
+          stereo tape decks, thirty loudspeakers and a similar num-
+          ber of spotlights;  to  the  development  of  least-cost-
+          routing  software  controlling  telephone  central office
+          switching equipment.
+
+               Besides computers, my other interests include video,
+          stereo  equipment,  (and  in  fact  most  kinds  of  home
+          electronics),  massage,  travel (especially interested in
+          ocean liners and trains), Citroens (a French automobile),
+          and meeting people.
+
+               If you find this Speaker Device Driver to be  useful
+          for  you,  and  you decide you would like to help support
+          this experiment in "ShareWare", your contributions toward
+          that end would be appreciated.   Also,  if you would just
+          like to write,  that is certainly welcome too!  Perhaps I
+          will reconnect with some old friends,  and make some  new
+          ones too, this way.
+
+               If you come up with any music or other command files
+          for  the  Speaker  Device  Driver  that you would like to
+          share with others,  I would appreciate your sending me  a
+          copy of them,  too.   (On diskette,  preferably!)  I will
+          consider these for inclusion on subsequent  revisions  of
+          the distribution diskette.
+
+               You can write to me at:
+
+               Gordon E. Peterson II
+               Noah Systems
+               P.O. Box 40476
+               San Antonio, Texas  78229-0476
+
+               Since  I  am currently (late 1986) spending a lot of
+          time outside the United States,  please  allow  time  for
+          mail to be forwarded to me.  I'm looking forward to hear-
+          ing from you!
+
+
+
+
+
+          Rev. November 13, 1986 23:41:04                              -24-
+
+
+
