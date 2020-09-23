@@ -1,0 +1,48 @@
+spkcmnds.txt   SPK file format. 10.4.94
+Source lost
+
+
+  All .SPK files can be played with the Beep command
+  Beep frequency(Hz), duration (millisecs)
+  Not Win98
+
+  Timer ticks are approximately 18 per second.
+
+
+  F - FREQUENCY.............
+      Frequency of tone in Hz, BEEP is typically 1000F.
+      BlankF or repeat F with no number, plays the previous note again.
+
+      0F to 65kF.
+
+  G - GAP...................
+      Number of ticks of silent time. This gap is inserted between all
+      following notes until a new G-string.
+      a gap.
+
+      0G  to  20G  typical.
+
+  D - DURATION OF EACH TONE.
+      Number of timer ticks for all following tones to sound, until a new
+      D-string.
+
+      Default approx 6D.
+
+  T - TEMPO..................
+      Scales all the D commands
+      256T is normal  ie 5D would be 5 ticks
+      128T would scale 5D to about 2.5 ticks  (128/256 ie .5 multipier)
+      512T would scale 5D to 10 (512/256 ie 2 multiplier) ticks.
+
+
+  P - Pause.................
+      P stops sound for up to about 5 secs or until an R received.
+
+  R - Resume................
+      R resumes after a P
+
+  B - Begin Recording for SPK driver
+  E - End Recording for SPK driver
+
+  NB P, R, B & E ignored for Beep freq,dur
+
